@@ -5,12 +5,17 @@ import { useInView } from 'react-intersection-observer';
 import { Users, Globe, Gauge, LineChart } from 'lucide-react';
 import { useEffect } from 'react';
 
-function Counter({ value, duration = 0.5 }) {
+interface CounterProps {
+  value: number;
+  duration?: number;
+}
+
+function Counter({ value, duration = 0.5 }: CounterProps) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
 
   useEffect(() => {
-    const controls = animate(count, parseInt(value), { duration });
+    const controls = animate(count, value, { duration });
     return controls.stop;
   }, [count, value, duration]);
 
@@ -24,10 +29,10 @@ export function AccomplishmentsSection() {
   });
 
   const stats = [
-    { icon: Users, value: "10", label: "Satisfied Customers", suffix: "+" },
-    { icon: Globe, value: "40", label: "Salvaged Websites", suffix: "+" },
-    { icon: Gauge, value: "58", label: "Avg. Speed Increase", suffix: "%" },
-    { icon: LineChart, value: "125", label: "Revenue Growth", suffix: "%" },
+    { icon: Users, value: 10, label: "Satisfied Customers", suffix: "+" },
+    { icon: Globe, value: 40, label: "Salvaged Websites", suffix: "+" },
+    { icon: Gauge, value: 58, label: "Avg. Speed Increase", suffix: "%" },
+    { icon: LineChart, value: 125, label: "Revenue Growth", suffix: "%" },
   ];
 
   return (
@@ -46,7 +51,7 @@ export function AccomplishmentsSection() {
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat, index) => (
+          {stats.map((stat) => (
             <motion.div
               key={stat.label}
               className="text-center"
